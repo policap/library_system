@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\BookResource;
 use App\Http\Controllers\Admin\StaffController;
 use App\Http\Controllers\Admin\VisitorController;
 use App\Http\Controllers\Auth\CustomLogin;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,12 +39,21 @@ Route::name('admin.')->prefix('admin')->middleware('admin')->group(function (){
     Route::get('staff/delete/{id}',[StaffController::class,'delete'])->name('staff.delete');
     Route::post('staff/statistics',[StaffController::class,'statistics'])->name('staff.statistics');
     Route::get('staff/{id}',[StaffController::class,'show'])->name('staff.show');
-
+    Route::get('books/import', [Controller::class, 'import_one'])->name('import_books');
+    Route::post('books/import', [Controller::class, 'import_books']);
+    Route::get('books/export', [Controller::class, 'export_books'])->name('export_books');
+    
     Route::get('books/search', [BookResource::class,'search'])->name('books.search');
     Route::get('books/do_search', [BookResource::class,'do_search'])->name('books.do_search');
     Route::resource('/books', BookResource::class);
     Route::resource('/visitors', VisitorController::class);
     
     Route::post('book/statistics',[BookResource::class, 'statistics'])->name('books.statistics');
+    
+    
+    Route::get('organizations/import', [Controller::class, 'import'])->name('import_organizations');
+    Route::post('organizations/import', [Controller::class, 'import_organizations']);
+    Route::get('organizations/export', [Controller::class, 'export_organizations'])->name('export_organizations');
+    
     
 });
